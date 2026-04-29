@@ -59,4 +59,17 @@ button:hover {
     background-color: #e9ecef;
     border-radius: 5px;
 }
+.equation-container {
+    background-color: #f8f9fa;
+    border: 1px dashed #ced4da;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    min-height: 60px; /* Keeps the page from jumping when it loads */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
