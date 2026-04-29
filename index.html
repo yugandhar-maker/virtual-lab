@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multiple Integration Virtual Lab</title>
     <link rel="stylesheet" href="style.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 </head>
 <body>
 
@@ -13,21 +17,25 @@
         <h1>Double Integration Solver</h1>
         <p>Enter your function f(x,y) and the limits of integration.</p>
 
+        <div class="equation-container">
+            <div id="equation-display"></div>
+        </div>
+
         <div class="input-group">
             <label>Function f(x,y):</label>
-            <input type="text" id="functionInput" placeholder="e.g., x^2 + y">
+            <input type="text" id="functionInput" placeholder="e.g., x^2 + y" oninput="updateEquation()">
         </div>
 
         <div class="bounds-container">
             <div class="bound-group">
-                <h3>X Limits</h3>
-                <input type="number" id="xStart" placeholder="Lower (a)">
-                <input type="number" id="xEnd" placeholder="Upper (b)">
+                <h3>X Limits (Inner)</h3>
+                <input type="number" id="xStart" placeholder="Lower (a)" oninput="updateEquation()">
+                <input type="number" id="xEnd" placeholder="Upper (b)" oninput="updateEquation()">
             </div>
             <div class="bound-group">
-                <h3>Y Limits</h3>
-                <input type="number" id="yStart" placeholder="Lower (c)">
-                <input type="number" id="yEnd" placeholder="Upper (d)">
+                <h3>Y Limits (Outer)</h3>
+                <input type="number" id="yStart" placeholder="Lower (c)" oninput="updateEquation()">
+                <input type="number" id="yEnd" placeholder="Upper (d)" oninput="updateEquation()">
             </div>
         </div>
 
@@ -41,3 +49,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
