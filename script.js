@@ -18,9 +18,16 @@ function solveIntegral() {
         const result = calculateDoubleIntegral(funcStr, xStart, xEnd, yStart, yEnd);
         // Round to 4 decimal places for clean display
         document.getElementById('resultOutput').innerText = result.toFixed(4);
+        
+        // --- NEW LINE: Trigger the 3D Graph ---
+        drawGraph(funcStr, xStart, xEnd, yStart, yEnd);
+        
     } catch (error) {
         document.getElementById('resultOutput').innerText = "Error: Invalid function syntax.";
+        document.getElementById('plot-container').style.display = 'none'; // Hide graph on error
     }
+
+
 }
 
 // The Riemann Sum logic from earlier
@@ -70,3 +77,62 @@ function updateEquation() {
 
 // 4. Run it once when the page loads to show the default f(x,y) setup
 window.onload = updateEquation;
+// Function to generate the 3D Surface Plot
+function drawGraph(funcString, xStart, xEnd, yStart, yEnd) {
+    const node = math.parse(funcString);
+    const code = node.compile();
+
+    // We create a grid of points to plot
+    let xValues = [];
+    let yValues = [];
+    let zValues = [];
+
+    // Create 30 steps for the graph resolution
+    const steps = 30; 
+    let dx = (xEnd - xStart) / steps;
+    let dy = (yEnd - yStart) / steps;
+
+    // Generate X and Y axes arrays
+    for (let i = 0; i <= steps; i++) {
+        xValues.push(xStart + i * dx);
+        yValues.push(yStart + i * dy);
+    }
+
+    // Generate Z values for the 2D grid
+    for (let j = 0; j <= steps; j++) {
+        let zRow = [];
+        for (let i = 0; i <= steps; i++) {
+            try {
+                let z = code.evaluate({ x: xValues[i], y: yValues[j] });
+                // Handle infinity or imaginary results gracefully
+                if (!isFinite(z)) z = 0; 
+                zRow.push(z);
+            } catch (e) {
+                zRow.push(0);
+            }
+        }
+        zValues.push(zRow);
+    }
+
+    // Plotly configuration
+    const data = [{
+        z: zValues,
+        x: xValues,
+        y: yValues,
+        type: 'surface',
+        colorscale: 'Viridis'
+    }];
+
+    const layout = {
+        title: 'Surface Plot of f(x,y)',
+        autosize: true,
+        margin: { l: 0, r: 0, b: 0, t: 40 }
+    };
+
+    // Make the container visible and draw the plot
+    const plotContainer = document.getElementById('plot-container');
+    plotContainer.style.display = 'block';
+    Plotly.newPlot('plot-container', data, layout);
+}
+
+
