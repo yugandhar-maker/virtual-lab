@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Integration Virtual Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Double Integration Solver</h1>
+        <p>Enter your function f(x,y) and the limits of integration.</p>
+
+        <div class="input-group">
+            <label>Function f(x,y):</label>
+            <input type="text" id="functionInput" placeholder="e.g., x^2 + y">
+        </div>
+
+        <div class="bounds-container">
+            <div class="bound-group">
+                <h3>X Limits</h3>
+                <input type="number" id="xStart" placeholder="Lower (a)">
+                <input type="number" id="xEnd" placeholder="Upper (b)">
+            </div>
+            <div class="bound-group">
+                <h3>Y Limits</h3>
+                <input type="number" id="yStart" placeholder="Lower (c)">
+                <input type="number" id="yEnd" placeholder="Upper (d)">
+            </div>
+        </div>
+
+        <button onclick="solveIntegral()">Calculate Volume</button>
+
+        <div class="result-box">
+            <h2>Result: <span id="resultOutput">0</span></h2>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
